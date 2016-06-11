@@ -28,6 +28,7 @@
               </h4>
               <p>Start: <strong>{{ Carbon\Carbon::parse($match->date)->toDateTimeString() }}</strong></p>
               <h3>{{ $match->homeTeamName }} <span style="font-weight:normal;">vs</span> {{ $match->awayTeamName }}</h3>
+              <h3>{{ is_null($match->result->goalsHomeTeam) ? 0 : $match->result->goalsHomeTeam }} - {{ is_null($match->result->goalsAwayTeam) ? 0 : $match->result->goalsAwayTeam }}</h3>
             </div>
             <?php
               $date = Carbon\Carbon::parse($match->date);
