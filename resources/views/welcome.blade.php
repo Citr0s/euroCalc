@@ -17,19 +17,22 @@
             $date = Carbon\Carbon::create('2100');
           ?>
           @foreach($fixtures->fixtures as $key => $match)
-            @if($date->gt(Carbon\Carbon::parse($match->date)) && $match->status == 'FINISHED')
-              <div class="col-md-4" style="color:#999;">
+            @if($date->gt(Carbon\Carbon::parse($match->date)) && $match->status !== 'FINISHED')
+            <?php
+              $date = Carbon\Carbon::parse($match->date);
+              $match = $fixtures->fixtures[--$key];
+            ?>
+            <div class="col-md-4" style="text-align:left; color:#999;">
               <h4>
                 Last match
               </h4>
-              <p>Played: <strong>{{ Carbon\Carbon::parse($match->date)->toDateTimeString() }}</strong></p>
+              <p>Start: <strong>{{ Carbon\Carbon::parse($match->date)->toDateTimeString() }}</strong></p>
               <h3>{{ $match->homeTeamName }} <span style="font-weight:normal;">vs</span> {{ $match->awayTeamName }}</h3>
-              @if(Carbon\Carbon::parse($match->date)->lt(Carbon\Carbon::now()))
-                <h3>{{ is_null($match->result->goalsHomeTeam) ? 0 : $match->result->goalsHomeTeam }} - {{ is_null($match->result->goalsAwayTeam) ? 0 : $match->result->goalsAwayTeam }}</h3>
-              @endif
             </div>
-            @endif
-            @if($date->gt(Carbon\Carbon::parse($match->date)) && $match->status !== 'FINISHED')
+            <?php
+              $date = Carbon\Carbon::parse($match->date);
+              $match = $fixtures->fixtures[++$key];
+            ?>
             <div class="col-md-4" style="text-align:center;">
               <h4>
                 @if($match->status === 'IN_PLAY')
