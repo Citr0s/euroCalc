@@ -11,7 +11,7 @@ class PageController extends Controller
     public function index(){
       $uri = 'http://api.football-data.org/v1/soccerseasons/424/';
       $reqPrefs['http']['method'] = 'GET';
-      $reqPrefs['http']['header'] = 'X-Auth-Token: fe33c7da872942c19b6c5f236797cd7b';
+      $reqPrefs['http']['header'] = 'X-Auth-Token: ' . env('API_TOKEN');
       $stream_context = stream_context_create($reqPrefs);
 
       $eventSource = file_get_contents($uri, false, $stream_context);
