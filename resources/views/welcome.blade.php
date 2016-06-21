@@ -14,24 +14,24 @@
       <div class="panel-body">
         <div class="row" style="padding-bottom:15px;">
           <?php
-            $date = Carbon\Carbon::create('2100');
+            $date = Carbon\Carbon::create('2100')->timezone('Europe/London');
           ?>
           @foreach($fixtures->fixtures as $key => $match)
-            @if($date->gt(Carbon\Carbon::parse($match->date)) && $match->status !== 'FINISHED')
+            @if($date->gt(Carbon\Carbon::parse($match->date)->timezone('Europe/London')) && $match->status !== 'FINISHED')
             <?php
-              $date = Carbon\Carbon::parse($match->date);
+              $date = Carbon\Carbon::parse($match->date)->timezone('Europe/London');
               $match = $fixtures->fixtures[--$key];
             ?>
             <div class="col-md-4" style="text-align:left; color:#999;">
               <h4>
                 Last match
               </h4>
-              <p>Start: <strong>{{ Carbon\Carbon::parse($match->date)->toDateTimeString() }}</strong></p>
+              <p>Start: <strong>{{ Carbon\Carbon::parse($match->date)->timezone('Europe/London')->toDateTimeString() }}</strong></p>
               <h3>{{ $match->homeTeamName }} <span style="font-weight:normal;">vs</span> {{ $match->awayTeamName }}</h3>
               <h3>{{ is_null($match->result->goalsHomeTeam) ? 0 : $match->result->goalsHomeTeam }} - {{ is_null($match->result->goalsAwayTeam) ? 0 : $match->result->goalsAwayTeam }}</h3>
             </div>
             <?php
-              $date = Carbon\Carbon::parse($match->date);
+              $date = Carbon\Carbon::parse($match->date)->timezone('Europe/London');
               $match = $fixtures->fixtures[++$key];
             ?>
             <div class="col-md-4" style="text-align:center;">
@@ -42,23 +42,23 @@
                   Scheduled
                 @endif
               </h4>
-              <p>Start: <strong>{{ Carbon\Carbon::parse($match->date)->diffForHumans() }}</strong></p>
+              <p>Start: <strong>{{ Carbon\Carbon::parse($match->date)->timezone('Europe/London')->diffForHumans() }}</strong></p>
               <h3>{{ $match->homeTeamName }} <span style="font-weight:normal;">vs</span> {{ $match->awayTeamName }}</h3>
-              @if(Carbon\Carbon::parse($match->date)->lt(Carbon\Carbon::now()))
+              @if(Carbon\Carbon::parse($match->date)->timezone('Europe/London')->lt(Carbon\Carbon::now()->timezone('Europe/London')))
                 <h3>{{ is_null($match->result->goalsHomeTeam) ? 0 : $match->result->goalsHomeTeam }} - {{ is_null($match->result->goalsAwayTeam) ? 0 : $match->result->goalsAwayTeam }}</h3>
               @endif
             </div>
             <?php
-              $date = Carbon\Carbon::parse($match->date);
+              $date = Carbon\Carbon::parse($match->date)->timezone('Europe/London');
               $match = $fixtures->fixtures[++$key];
             ?>
             <div class="col-md-4" style="text-align:right; color:#999;">
               <h4>
                 Next match
               </h4>
-              <p>Start: <strong>{{ Carbon\Carbon::parse($match->date)->toDateTimeString() }}</strong></p>
+              <p>Start: <strong>{{ Carbon\Carbon::parse($match->date)->timezone('Europe/London')->toDateTimeString() }}</strong></p>
               <h3>{{ $match->homeTeamName }} <span style="font-weight:normal;">vs</span> {{ $match->awayTeamName }}</h3>
-              @if(Carbon\Carbon::parse($match->date)->lt(Carbon\Carbon::now()))
+              @if(Carbon\Carbon::parse($match->date)->timezone('Europe/London')->lt(Carbon\Carbon::now()->timezone('Europe/London')))
                 <h3>{{ is_null($match->result->goalsHomeTeam) ? 0 : $match->result->goalsHomeTeam }} - {{ is_null($match->result->goalsAwayTeam) ? 0 : $match->result->goalsAwayTeam }}</h3>
               @endif
             </div>
